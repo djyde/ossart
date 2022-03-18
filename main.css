@@ -1,3 +1,13 @@
 body {
   -webkit-print-color-adjust: exact !important;
 }
+@media print {
+  .not-printable {
+    display: none !important;
+  }
+
+  .preview {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

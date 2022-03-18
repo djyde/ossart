@@ -1,16 +1,30 @@
 import React from 'react'
 import { getSession } from 'next-auth/react'
 import { getFiveYearsCalendar, getYearCalendar } from '../core'
-import { Box, Flex, SimpleGrid, Text, Tooltip } from '@chakra-ui/react'
+import { Box, Flex, FormControl, FormLabel, SimpleGrid, Text, Tooltip } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 
 function IndexPage(props: {
   session,
   calendar
 }) {
+  const leftPanelWidth = "36rem"
   return (
     <>
-      <Preview calendar={props.calendar} title={`Randy Lu on GitHub`} />
+      <Box>
+
+        <Box className='not-printable' position={'fixed'} w={leftPanelWidth} top="0" left="0" bottom="0" bgColor={"gray.700"} >
+          <FormControl>
+            <FormLabel>
+              Username
+            </FormLabel>
+          </FormControl>
+        </Box>
+        <Box className='preview' p="8" ml={leftPanelWidth}>
+
+          <Preview calendar={props.calendar} title={`Randy Lu on GitHub`} />
+        </Box>
+      </Box>
     </>
   )
 }
