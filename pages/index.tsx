@@ -1,7 +1,7 @@
 import React from 'react'
 import { getSession } from 'next-auth/react'
 import { getFiveYearsCalendar, getYearCalendar } from '../core'
-import { Box, Flex, FormControl, FormLabel, SimpleGrid, Text, Tooltip } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Input, SimpleGrid, Text, Tooltip, VStack } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 
 function IndexPage(props: {
@@ -13,12 +13,37 @@ function IndexPage(props: {
     <>
       <Box>
 
-        <Box className='not-printable' position={'fixed'} w={leftPanelWidth} top="0" left="0" bottom="0" bgColor={"gray.700"} >
-          <FormControl>
-            <FormLabel>
-              Username
-            </FormLabel>
-          </FormControl>
+        <Box borderRight={"1px solid"} borderColor="gray.200" p="4" px="8" className='not-printable' position={'fixed'} w={leftPanelWidth} top="0" left="0" bottom="0" >
+          <VStack gap="2">
+            <FormControl isRequired>
+              <FormLabel>
+                username
+              </FormLabel>
+              <Input size="sm" placeholder='e.g. djyde' />
+            </FormControl>
+            <FormControl>
+              <FormLabel>
+                title
+              </FormLabel>
+              <Input size="sm" />
+            </FormControl>
+
+            <FormControl>
+              <Button colorScheme={"green"} size="sm">
+                Generate
+              </Button>
+            </FormControl>
+
+          </VStack>
+          <Box mt="8" rounded="lg" borderColor={"green.100"} borderWidth="1px" p="4" fontSize={"sm"} bgColor="green.50" color="green">
+            <Text mb="2" fontWeight="bold">
+              How to print?
+            </Text>
+
+            <Text>
+              {`In your browser's menu, click File > Print`}
+            </Text>
+          </Box>
         </Box>
         <Box className='preview' p="8" ml={leftPanelWidth}>
 
