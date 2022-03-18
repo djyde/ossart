@@ -163,3 +163,5 @@ yarn.lock
 prisma/migrations
 generated/*
 db.sqlite
+
+cache.json
