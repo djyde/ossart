@@ -1,0 +1,31 @@
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^1.1.4",
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
+    "@hapi/boom": "^9.1.2",
+    "@next-auth/prisma-adapter": "^1.0.1",
+    "@prisma/client": "^2.19.0",
+    "axios": "^0.21.1",
+    "framer-motion": "^3.2.1",
+    "next": "^12",
+    "next-auth": "^4",
+    "next-connect": "^0.12",
+    "prisma": "^2.30.3",
+    "react": "^17",
+    "react-dom": "^17",
+    "react-query": "^3.6.0",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@types/node": "^14.14.21",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "typescript": "^4"
+  }
+}
