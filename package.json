@@ -14,6 +14,7 @@
     "dayjs": "^1.11.0",
     "framer-motion": "^3.2.1",
     "lowdb": "^3.0.0",
+    "nanoid": "^3.3.1",
     "next": "^12",
     "next-auth": "^4",
     "next-connect": "^0.12",

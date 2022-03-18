@@ -1,16 +1,44 @@
-import React from 'react'
+import React, { useMemo, useRef } from 'react'
 import { getSession } from 'next-auth/react'
 import { getFiveYearsCalendar, getYearCalendar } from '../core'
-import { Box, Button, Flex, FormControl, FormLabel, Input, SimpleGrid, Text, Tooltip, VStack } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Input, SimpleGrid, SkeletonText, Text, toast, Tooltip, useToast, VStack } from '@chakra-ui/react'
 import dayjs from 'dayjs'
+import { useMutation, useQuery } from 'react-query'
+import { apiClient } from '../utils.client'
+import { AxiosError } from 'axios'
+import Head from 'next/head'
 
 function IndexPage(props: {
   session,
   calendar
 }) {
+  const [username, setUsername] = React.useState("")
+  const toast = useToast()
   const leftPanelWidth = "36rem"
+
+  const getCalendarQuery = useMutation(async () => {
+    const result = await apiClient.get('/generate', {
+      params: {
+        login: username
+      }
+    })
+    return result.data.calendar
+  }, {
+    onError(e: AxiosError) {
+      toast({
+        status: 'error',
+        position: 'top',
+        description: e.response.data.message
+      })
+    }
+  })
+
   return (
     <>
+
+      <Head>
+        <title>OSSArt | Print your GitHub activity as an artwork</title>
+      </Head>
       <Box>
 
         <Box borderRight={"1px solid"} borderColor="gray.200" p="4" px="8" className='not-printable' position={'fixed'} w={leftPanelWidth} top="0" left="0" bottom="0" >
@@ -19,17 +47,21 @@ function IndexPage(props: {
               <FormLabel>
                 username
               </FormLabel>
-              <Input size="sm" placeholder='e.g. djyde' />
+              <Input value={username} onChange={_ => {
+                setUsername(_.target.value)
+              }} size="sm" placeholder='e.g. djyde' />
             </FormControl>
-            <FormControl>
+            {/* <FormControl>
               <FormLabel>
                 title
               </FormLabel>
               <Input size="sm" />
-            </FormControl>
+            </FormControl> */}
 
             <FormControl>
-              <Button colorScheme={"green"} size="sm">
+              <Button isLoading={getCalendarQuery.isLoading} onClick={_ => {
+                getCalendarQuery.mutate()
+              }} colorScheme={"green"} size="xs">
                 Generate
               </Button>
             </FormControl>
@@ -47,7 +79,7 @@ function IndexPage(props: {
         </Box>
         <Box className='preview' p="8" ml={leftPanelWidth}>
 
-          <Preview calendar={props.calendar} title={`Randy Lu on GitHub`} />
+          <Preview isLoading={getCalendarQuery.isLoading} calendar={getCalendarQuery.data} title={`${username} on GitHub`} />
         </Box>
       </Box>
     </>
@@ -55,32 +87,66 @@ function IndexPage(props: {
 }
 
 function Preview(props: {
+  isLoading: boolean,
   calendar,
   title: string
 }) {
-  return (
-    <Box>
-      <Text fontSize={"lg"} fontWeight="medium">
-        {props.title}
-      </Text>
-      <Box as="hr" my="2" />
-      <Box mt="8">
-
-        {props.calendar.map(cal => {
-          return (
-            <Box my="4">
-              <Wall calendar={cal} />
-            </Box>
-          )
-        })}
+  if (props.isLoading) {
+    return (
+      <Box>
+        <SkeletonText />
       </Box>
-    </Box>
-  )
+    )
+  } else if (!props.isLoading && !props.calendar) {
+    return (
+      <Box>
+
+      </Box>
+    )
+  } else {
+
+    return (
+      <Box>
+        <Text fontSize={"lg"} fontWeight="medium">
+          {props.title}
+        </Text>
+        <Box as="hr" my="2" />
+        <Box mt="8">
+
+          {props.calendar?.map(cal => {
+            console.log(cal)
+            return (
+              <Box key={cal.id} my="4">
+                <Wall calendar={cal} />
+              </Box>
+            )
+          })}
+        </Box>
+      </Box>
+    )
+  }
 }
 
 function Wall(props: {
   calendar
 }) {
+  const Canvas = useMemo(() => {
+    return props.calendar.weeks.map((item, weekIndex) => {
+      return (
+        <Flex key={weekIndex} gap={1} direction={"column"} justifyContent={weekIndex === 0 ? "end" : "start"}>
+          {item.contributionDays.map(day => {
+            return (
+              <Tooltip key={day.date} label={day.date}>
+                <Box w="2" h="2" bgColor={day.color}>
+
+                </Box>
+              </Tooltip>
+            )
+          })}
+        </Flex>
+      )
+    })
+  }, [props.calendar])
   return (
     <>
       <Flex gap={2} mb="2" fontSize={"sm"} fontWeight="bold">
@@ -90,21 +156,7 @@ function Wall(props: {
         </Text>
       </Flex>
       <Flex gap="1" alignItems={'stretch'}>
-        {props.calendar.weeks.map((item, weekIndex) => {
-          return (
-            <Flex gap={1} direction={"column"} justifyContent={weekIndex === 0 ? "end" : "start"}>
-              {item.contributionDays.map(day => {
-                return (
-                  <Tooltip label={day.date}>
-                    <Box w="2" h="2" bgColor={day.color}>
-
-                    </Box>
-                  </Tooltip>
-                )
-              })}
-            </Flex>
-          )
-        })}
+        {Canvas}
       </Flex>
     </>
   )

@@ -10,7 +10,14 @@ export class Cache {
   constructor(private cacheName: string) {
   }
 
+  async prepare() {
+    await this.db.read()
+    this.db.data = this.db.data || {}
+    await this.db.write()
+  }
+
   async get(key: string) {
+    await this.prepare()
     await this.db.read()
     if (!this.db.data[this.cacheName]) {
       return null
@@ -19,6 +26,7 @@ export class Cache {
   }
 
   async set(key: string, value: any) {
+    await this.prepare()
     await this.db.read()
     if (!this.db.data[this.cacheName]) {
       this.db.data[this.cacheName] = {}
