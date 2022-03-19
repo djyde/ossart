@@ -1,10 +1,14 @@
 import { Box, Button, Container, Link, Text, VStack } from "@chakra-ui/react"
 import { signIn } from "next-auth/react"
+import Head from "next/head"
 import { getSession } from "../utils.server"
 
 function Intro() {
   return (
     <>
+      <Head>
+        <title>OSSArt | Print your GitHub activity as an artwork</title>
+      </Head>
       <VStack alignItems={"start"}>
         <Text>This is a tool to generate your GitHub activity as an artwork. You can generate a near 6 years contribution map by any username, and then print it to an A4 paper and wrap it in a photo frame you bought yourself.</Text>
         <Text>This project is inspired by <Link textDecoration={"underline"} href="https://codeprints.dev/">Codeprints</Link> but this is free and open source project for everyone can print their own artwork.</Text>
