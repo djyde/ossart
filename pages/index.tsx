@@ -13,7 +13,7 @@ function Intro() {
           <Image src="https://gbstatic.djyde.com/uPic/h7JgM0.jpg?x-oss-process=style/80" ></Image>
         </Box>
         <Text>This is a tool to generate your GitHub activity as an artwork. You can generate a near 6 years contribution map by any username, and then print it to an A4 paper and wrap it in a photo frame you bought yourself.</Text>
-        <Text>This project is inspired by <Link textDecoration={"underline"} href="https://codeprints.dev/">Codeprints</Link> but this is free and <Link href="https://github.com/djyde/ossart">open source</Link> project for everyone can print their own artwork.</Text>
+        <Text>This project is inspired by <Link textDecoration={"underline"} href="https://codeprints.dev/">Codeprints</Link> but this is free and <Link textDecor={"underline"} href="https://github.com/djyde/ossart">open source</Link> project for everyone can print their own artwork.</Text>
         <Center w="full">
 
           <Button my="4" className="umami--click-signin-button" size="xs" colorScheme={"green"} onClick={_ => signIn('github', {
