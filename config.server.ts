@@ -1,12 +1,12 @@
-import Providers from "next-auth/providers";
+import GithubProvider from "next-auth/providers/github";
 
 /**
  * Auth Providers
  * https://next-auth.js.org/configuration/providers
  */
 export const authProviders = [
-  // Providers.GitHub({
-  //   clientId: process.env.GITHUB_ID,
-  //   clientSecret: process.env.GITHUB_SECRET,
-  // })
+  GithubProvider({
+    clientId: process.env.GITHUB_ID,
+    clientSecret: process.env.GITHUB_SECRET,
+  })
 ]

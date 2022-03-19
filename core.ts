@@ -9,6 +9,7 @@ dayjs.extend(utc);
 export async function getYearCalendar(params: {
   login: string;
   fromYear: string;
+  token: string
 }) {
   const query = `query GetCalendar($login: String!, $from: DateTime) { 
   user(login: $login) {
@@ -38,21 +39,19 @@ export async function getYearCalendar(params: {
     },
     {
       headers: {
-        Authorization: "bearer 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",
+        Authorization: `bearer ${params.token}`,
       },
     }
   );
-  console.log(result.data);
   if (result.data.errors?.length) {
     throw HTTPException.notFound(result.data.errors[0].message);
   }
   return result.data.data.user.contributionsCollection.contributionCalendar;
 }
 
-export async function getFiveYearsCalendar(params: { login: string }) {
+export async function getFiveYearsCalendar(params: { token: string, login: string }) {
   const cache = new Cache("five_years");
   if (await cache.get(params.login)) {
-    console.log("use cache");
     return await cache.get(params.login);
   }
   const cal = await Promise.all(
@@ -66,6 +65,7 @@ export async function getFiveYearsCalendar(params: { login: string }) {
         ...(await getYearCalendar({
           login: params.login,
           fromYear: year,
+          token: params.token
         })),
       };
     })
