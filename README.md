@@ -1,3 +1,5 @@
-# nextjs-saas-starter
+Get start: https://getoss.art
 
-https://djyde.github.io/nextjs-saas-starter/
+## License
+
+MIT License
