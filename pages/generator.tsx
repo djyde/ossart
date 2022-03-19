@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react'
 import { getSession, signIn, signOut, useSession } from 'next-auth/react'
 import { getFiveYearsCalendar, getYearCalendar } from '../core'
-import { Box, Button, Flex, FormControl, FormLabel, Input, SimpleGrid, SkeletonText, Spacer, Text, toast, Tooltip, useToast, VStack } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Input, Select, SimpleGrid, SkeletonText, Spacer, Text, toast, Tooltip, useToast, VStack } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import { useMutation, useQuery } from 'react-query'
 import { apiClient } from '../utils.client'
@@ -13,12 +13,14 @@ function IndexPage(props: {
   const session = useSession()
   const toast = useToast()
   const [username, setUsername] = React.useState("")
+  const [yearOffset, setYearOffset] = React.useState("0")
   const leftPanelWidth = "36rem"
 
   const getCalendarQuery = useMutation(async () => {
     const result = await apiClient.get('/generate', {
       params: {
-        login: username.trimStart().trimEnd()
+        login: username.trimStart().trimEnd(),
+        yearOffset
       }
     })
     return result.data.calendar
@@ -58,6 +60,16 @@ function IndexPage(props: {
               <Input value={username} onChange={_ => {
                 setUsername(_.target.value)
               }} size="sm" placeholder='e.g. djyde' />
+            </FormControl>
+            <FormControl>
+
+              <FormLabel>Year range</FormLabel>
+              <Select value={yearOffset} onChange={_ => {
+                setYearOffset(_.target.value)
+              }}>
+                <option value="0">2016-2021</option>
+                <option value="6">2010-2015</option>
+              </Select>
             </FormControl>
             {/* <FormControl>
               <FormLabel>

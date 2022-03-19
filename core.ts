@@ -49,11 +49,14 @@ export async function getYearCalendar(params: {
   return result.data.data.user.contributionsCollection.contributionCalendar;
 }
 
-export async function getFiveYearsCalendar(params: { token: string, login: string }) {
+export async function getFiveYearsCalendar(params: { token: string, login: string }, options?: {
+  offset?: string
+}) {
+  const offset = options.offset ? Number(options.offset) : 0;
   const cal = await Promise.all(
     [0, 0, 0, 0, 0, 0].map(async (_, index) => {
       const year = dayjs()
-        .subtract(index + 1, "year")
+        .subtract(index + 1 + offset, "year")
         .get("year")
         .toString();
       return {

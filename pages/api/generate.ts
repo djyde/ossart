@@ -15,6 +15,8 @@ export default apiHandler().get(async (req, res) => {
   const result = await getFiveYearsCalendar({
     login: req.query.login as string,
     token: session.accessToken as string
+  }, {
+    offset: req.query.yearOffset as string
   });
   res.json({
     calendar: result
