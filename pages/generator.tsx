@@ -45,7 +45,7 @@ function IndexPage(props: {
             <Flex>
               <Text>Welcome {session.data.user.name} </Text>
               <Spacer />
-              <Button size="xs" onClick={_ => {
+              <Button className='umami--click--signout-button' size="xs" onClick={_ => {
                 signOut({
                   callbackUrl: '/'
                 })
@@ -67,7 +67,7 @@ function IndexPage(props: {
             </FormControl> */}
 
             <FormControl>
-              <Button isLoading={getCalendarQuery.isLoading} onClick={_ => {
+              <Button className='umami--click--generate-button' isLoading={getCalendarQuery.isLoading} onClick={_ => {
                 if (username.trimStart().trimEnd()) {
                   getCalendarQuery.mutate()
                 }

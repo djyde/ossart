@@ -10,7 +10,7 @@ function Intro() {
         <Text>This project is inspired by <Link textDecoration={"underline"} href="https://codeprints.dev/">Codeprints</Link> but this is free and open source project for everyone can print their own artwork.</Text>
       </VStack>
       <Box mt="4">
-        <Button size="xs" colorScheme={"green"} onClick={_ => signIn('github', {
+        <Button className="umami--click-signin-button" size="xs" colorScheme={"green"} onClick={_ => signIn('github', {
           callbackUrl: '/generator'
         })}>Sign in with GitHub to get start</Button>
       </Box>
