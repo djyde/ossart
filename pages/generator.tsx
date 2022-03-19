@@ -89,7 +89,7 @@ function IndexPage(props: {
         </Box>
         <Box className='preview' p="8" ml={leftPanelWidth}>
 
-          <Preview isLoading={getCalendarQuery.isLoading} calendar={getCalendarQuery.data} title={`${username} on GitHub`} />
+          <Preview isLoading={getCalendarQuery.isLoading} calendar={getCalendarQuery.data} title={`@${username} on GitHub`} />
         </Box>
       </Box>
     </>
@@ -126,11 +126,15 @@ function Preview(props: {
           {props.calendar?.map(cal => {
             console.log(cal)
             return (
-              <Box key={cal.id} my="4">
+              <Box key={cal.id} my="8">
                 <Wall calendar={cal} />
               </Box>
             )
           })}
+        </Box>
+
+        <Box color="gray.500" fontSize={"xs"}>
+          Made by <Box as="span" textDecoration={"underline"}>getoss.art</Box>
         </Box>
       </Box>
     )

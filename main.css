@@ -1,5 +1,6 @@
 body {
   -webkit-print-color-adjust: exact !important;
+  font-family: 'IBM Plex Serif', serif;
 }
 @media print {
   .not-printable {
