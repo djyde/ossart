@@ -50,10 +50,6 @@ export async function getYearCalendar(params: {
 }
 
 export async function getFiveYearsCalendar(params: { token: string, login: string }) {
-  const cache = new Cache("five_years");
-  if (await cache.get(params.login)) {
-    return await cache.get(params.login);
-  }
   const cal = await Promise.all(
     [0, 0, 0, 0, 0, 0].map(async (_, index) => {
       const year = dayjs()
@@ -70,6 +66,5 @@ export async function getFiveYearsCalendar(params: { token: string, login: strin
       };
     })
   );
-  cache.set(params.login, cal);
   return cal;
 }
