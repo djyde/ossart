@@ -116,11 +116,11 @@ function Preview(props: {
   } else {
 
     return (
-      <Box>
-        <Text fontSize={"lg"} fontWeight="medium">
+      <Box p="12">
+        <Text display={'inline-block'} pb="2" fontSize={"lg"} borderBottom="1px solid" borderColor={"gray.200"} fontWeight="medium">
           {props.title}
         </Text>
-        <Box as="hr" my="2" />
+
         <Box mt="8">
 
           {props.calendar?.map(cal => {
